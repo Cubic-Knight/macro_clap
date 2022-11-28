@@ -3,6 +3,10 @@ name = "macro_clap"
 version = "0.1.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
+description = "Command-line argument parsing to its simplest"
+repository = "https://github.com/Cubic-Knight/macro_clap"
+readme = "README.md"
+keywords = ["macro", "clap", "cli", "quick"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

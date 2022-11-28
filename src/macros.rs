@@ -1,3 +1,13 @@
+/// The main command-line argument parsing macro
+/// 
+/// Usage:
+/// ```rust
+/// cli!(
+///     const ARG_PARSER: ArgParser<INTRODUCTION> = [
+///         /* list of arguments */
+///     ]
+/// );
+/// ```
 #[macro_export]
 macro_rules! cli {
     (
@@ -169,6 +179,7 @@ macro_rules! cli {
     };
 }
 
+/// Underlying macro to implement types. Not for use in code
 #[macro_export]
 macro_rules! impl_type {
     (arg, $type:tt) => {};
@@ -218,6 +229,7 @@ macro_rules! impl_type {
     };
 }
 
+/// Underlying macro to make usage strings. Not for use in code
 #[macro_export]
 macro_rules! usage {
     ($strings:tt : arg, $var:tt, $type:tt) => {
@@ -301,6 +313,12 @@ macro_rules! usage {
     };
 }
 
+/// The simple argument
+/// 
+/// Usage:
+/// ```rust
+/// arg!(name as Type)
+/// ```
 #[macro_export]
 macro_rules! arg {
     ($arg_var:tt as $res_type:tt from $args:tt with $usage_string:tt) => {
@@ -325,6 +343,12 @@ macro_rules! arg {
     };
 }
 
+/// The argument that may be missing
+/// 
+/// Usage:
+/// ```rust
+/// maybe!(name as (Option<Type>))
+/// ```
 #[macro_export]
 macro_rules! maybe {
     ($arg_var:tt as $res_type:tt from $args:tt with $usage_string:tt) => {
@@ -349,6 +373,20 @@ macro_rules! maybe {
     };
 }
 
+/// The intersection that separates two branches of arguments
+/// 
+/// Usage:
+/// ```rust
+/// branch!(name as BranchEnum {
+///     "keyword_1" |> Variant1 => {
+///         /* list of args if keyword_1 */
+///     },
+///     "keyword_2" |> Variant2 => {
+///         /* list of args if keyword_2 */
+///     },
+///     // You can make as many keywords as you want
+/// })
+/// ```
 #[macro_export]
 macro_rules! branch {
     (
@@ -396,6 +434,16 @@ macro_rules! branch {
     };
 }
 
+/// The matcher of options
+/// 
+/// Usage:
+/// ```rust
+/// opt!(name as OptionStruct {
+///     option_1_name: [ /* list of all the keywords related to option 1 */ ] -> OptionType1,
+///     option_2_name: [ /* list of all the keywords related to option 2 */ ] -> OptionType2,
+///     // You can make as many keywords as you want
+/// })
+/// ```
 #[macro_export]
 macro_rules! opt {
     (
@@ -438,6 +486,12 @@ macro_rules! opt {
     };
 }
 
+/// The collecter of all leftovers
+/// 
+/// Usage:
+/// ```rust
+/// collect!(rest as (Vec<String>))
+/// ```
 #[macro_export]
 macro_rules! collect {
     ($arg_var:tt as $res_type:tt from $args:tt with $usage_string:tt) => {

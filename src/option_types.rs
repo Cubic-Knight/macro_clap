@@ -2,7 +2,11 @@ pub trait OptionReceptacle {
     fn receptacle_default() -> Self;
     fn receive_value(&mut self, value: Option<String>) -> Result<(), String>;
 }
-
+/// Whether an option is mentionned or not
+/// 
+/// `Flag` is set has its `state` set to `false` by default
+/// 
+/// If the option is present one or more times in the arguments, its `state` will be set to `true`
 #[derive(Debug)]
 pub struct Flag {
     pub state: bool
@@ -18,6 +22,13 @@ impl OptionReceptacle for Flag {
     }
 }
 
+/// How much all of the values of the option add up to
+/// 
+/// `Counter` is set has its `count` set to `0` by default
+/// 
+/// If the option is present without value, the `count` will be incremented by `1`
+/// 
+/// If the option is present with a integer value, the `count` will be increased by that value
 #[derive(Debug)]
 pub struct Counter<T>{
     pub count: T
@@ -40,6 +51,13 @@ where T: From<u8> + std::str::FromStr + std::ops::AddAssign<T> {
     }
 }
 
+/// How many times an option is mentionned
+/// 
+/// `FlagCounter` is set has its `count` set to `0` by default
+/// 
+/// If the option is present without value, the `count` will be incremented by `1`
+/// 
+/// If the option is present with a value, unlike `Counter`, it will result in an error
 #[derive(Debug)]
 pub struct FlagCounter<T>{
     pub count: T
@@ -56,6 +74,11 @@ where T: From<u8> + std::str::FromStr + std::ops::AddAssign<T> {
     }
 }
 
+/// The first value given to the option
+/// 
+/// `GrabFirst` will return the value of the first occurence of the option
+/// 
+/// If the option is not mentionned, its field `first` will be None
 #[derive(Debug)]
 pub struct GrabFirst<T> {
     pub first: Option<T>,
@@ -79,6 +102,11 @@ where T: std::str::FromStr {
     }
 }
 
+/// The last value given to the option
+///
+/// `GrabLast` will return the value of the last occurence of the option
+/// 
+/// If the option is not mentionned, its field `last` will be None
 #[derive(Debug)]
 pub struct GrabLast<T> {
     pub last: Option<T>,
@@ -101,6 +129,11 @@ where T: std::str::FromStr {
     }
 }
 
+/// All values given to the option
+///
+/// `GrabAll` will return the value of all the occurences of the option, in a `Vec<_>`
+/// 
+/// If the option is not mentionned, its field `items` will be a `Vec` of length `0`
 #[derive(Debug)]
 pub struct GrabAll<T> {
     pub items: Vec<T>,
